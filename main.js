@@ -1,13 +1,15 @@
 'use strict'
 document.title = 'Snake'
 let board = document.createElement('div')
-board.style.width = '500px'
-board.style.height = '500px'
+let width = 10
+let height = 10
+board.style.width = `${width * 50}px`
+board.style.height = `${height * 50}px`
 board.style.position = 'absolute'
 board.style.top = '0px'
 board.style.left = '0px'
 board.style.lineHeight = '0px'
-for (let i = 1; i <= 10; i++) for (let j = 1; j <= 10; j++) {
+for (let i = 1; i <= height; i++) for (let j = 1; j <= width; j++) {
     let div = document.createElement('div')
     div.id = `box${j}-${i}`
     div.style.width = '48px'
@@ -26,7 +28,7 @@ let settledDir
 let dir
 let snakeParts = []
 class Part {
-    constructor(posId = `box${Math.floor(Math.random() * 10) + 1}-${Math.floor(Math.random() * 10) + 1}`, color = '#000000') {
+    constructor(posId = `box${Math.floor(Math.random() * width) + 1}-${Math.floor(Math.random() * height) + 1}`, color = '#000000') {
         if (document.querySelector(`#${posId}`) === null) return
         let [x, y] = calcPos(posId)
         this.elem = document.createElement('div')
@@ -59,9 +61,9 @@ function selectRandomElementFromArray(arr = []) {
 function addRandomAppleCoords() {
     let allOtherCoords = new Set([...apples.map(elem => elem.coords), ...snakeParts.map(elem => elem.position)].map(elem => elem.join(',')))
     let arr = []
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= width; i++) {
         arr.push([])
-        for (let j = 1; j <= 10; j++) {
+        for (let j = 1; j <= height; j++) {
             if (allOtherCoords.has(`${i},${j}`)) continue
             arr[i - 1].push([i, j])
         }
